@@ -125,7 +125,7 @@ public:
         //appending data in the file
         fp << enroll << "," << first_name << "," << last_name << "," << sex << "," << dob << "," << mob_no << "," << email << "," << aadhar << "," << hno << "," << city1 << "," << state1 << "," << pin1 << "," << father_name << "," << father_mobno
            << "," << mother_name << "," << mother_mobno << endl;
-        
+
         fp.close();
         //closing a file
 
@@ -224,6 +224,173 @@ public:
 
         fp.close();
         //closing a file
+    }
+
+    void update_basic_details(int enroll)
+    {
+
+        int found = 0;
+
+        ofstream upd("updated.csv", ios::out);
+        ifstream ori("BasicDetails.csv", ios::in);
+        if (!(upd.is_open() && ori.is_open()))
+        {
+            cout << "error in opening file" << endl;
+            return;
+        }
+
+        string line, word;
+        while (getline(ori, line))
+        {
+            stringstream s(line);
+            getline(s, word, ',');
+            if (enroll == stoi(word))
+            {
+                found = 1;
+
+                cout << "Re-enter Details for updation" << endl;
+                int flag = 0;
+
+                cout << "Enter student's first name : ";
+                cin >> first_name;
+
+                cout << "Enter student's last name : ";
+                cin >> last_name;
+
+                while (flag == 0)
+                {
+                    cout << "Enter gender(M/F) : ";
+                    cin >> gender;
+
+                    if (gender != 'M' && gender != 'F' && gender != 'm' && gender != 'f')
+                    {
+                        flag = 0;
+                    }
+                    else
+                    {
+                        flag = 1;
+                        if (gender = 'M' || gender == 'm')
+                            sex = "Male";
+                        else
+                            sex = "Female";
+                    }
+                }
+                cout << "Enter DOB(DDMMYYYY):";
+                cin >> dob;
+
+                flag = 0;
+                while (flag == 0)
+                {
+                    cout << "enter mobile number(10 digits):";
+                    cin >> mob_no;
+
+                    // checking whether the mob no is 10 digit otherwise asking the user to reinput
+                    if (mob_no.length() == 10)
+                    {
+                        flag = 1;
+                    }
+                    else
+                    {
+                        cout << "enter valid Mobile Number" << endl;
+                        flag = 0;
+                    }
+                }
+
+                cout << "Enter email address:";
+                cin >> email;
+
+                cout << "Enter AADHAR number(12 digit):";
+                cin >> aadhar;
+
+                cout << "Permanent address -> " << endl;
+                cout << "House no./Area/Locality:";
+                fflush(stdin);
+                getline(cin, hno);
+                fflush(stdin);
+
+                cout << "Enter the city : ";
+                cin >> city1;
+
+                cout << "Enter the state : ";
+                cin >> state1;
+
+                cout << "enter pin code:";
+                cin >> pin1;
+
+                cout << "Father's Name:";
+                fflush(stdin);
+                getline(cin, father_name);
+                fflush(stdin);
+
+                cout << "Father's Mobile number:";
+                cin >> father_mobno;
+
+                cout << "Mother's Name:";
+                fflush(stdin);
+                getline(cin, mother_name);
+                fflush(stdin);
+
+                cout << "Mother's Mobile number:";
+                cin >> mother_mobno;
+
+                upd << enroll << "," << first_name << "," << last_name << "," << sex << "," << dob << "," << mob_no << "," << email << "," << aadhar << "," << hno << "," << city1 << "," << state1 << "," << pin1 << "," << father_name << "," << father_mobno
+                    << "," << mother_name << "," << mother_mobno << endl;
+            }
+            else
+            {
+                upd << line << endl;
+            }
+        }
+
+        if (found == 0)
+        {
+            cout << "No Record Found with entered enrollment." << endl;
+        }
+
+        upd.close();
+        ori.close();
+
+        remove("BasicDetails.csv");
+        rename("updated.csv", "BasicDetails.csv");
+    }
+
+    void delete_basic_details(int enroll)
+    {
+        int found = 0;
+
+        ofstream upd("updated.csv", ios::out);
+        ifstream ori("BasicDetails.csv", ios::in);
+        if (!(upd.is_open() && ori.is_open()))
+        {
+            cout << "error in opening file" << endl;
+            return;
+        }
+
+        string line, word;
+        while (getline(ori, line))
+        {
+            stringstream s(line);
+            getline(s, word, ',');
+            if (enroll == stoi(word))
+            {
+                found = 1;
+            }
+            else
+            {
+                upd << line << endl;
+            }
+        }
+
+        if (found == 0)
+        {
+            cout << "No Record Found with entered enrollment." << endl;
+        }
+
+        upd.close();
+        ori.close();
+
+        remove("BasicDetails.csv");
+        rename("updated.csv", "BasicDetails.csv");
     }
 };
 
@@ -375,7 +542,7 @@ public:
         //opening a file in append mode
 
         fp << enroll << "," << hypertension << "," << mellitus << "," << asthma << "," << bronchitis << "," << any_congenital_disease << "," << any_surgery_or_accident << "," << any_drug_intake << endl;
-        
+
         fp.close();
         //closing a file
 
@@ -421,7 +588,7 @@ public:
         fp.close();
         //closing a file
     }
-    
+
     //to search medical details of a student using enrolment number
     void search_medical_details(int enroll)
     {
@@ -475,6 +642,100 @@ public:
 
         fp.close();
         //closing a file
+    }
+
+    void update_medical_details(int enroll)
+    {
+
+        int found = 0;
+
+        ofstream upd("updated.csv", ios::out);
+        ifstream ori("MedicalDetails.csv", ios::in);
+        if (!(upd.is_open() && ori.is_open()))
+        {
+            cout << "error in opening file" << endl;
+            return;
+        }
+
+        string line, word;
+        while (getline(ori, line))
+        {
+            stringstream s(line);
+            getline(s, word, ',');
+            if (enroll == stoi(word))
+            {
+                found = 1;
+
+                cout << "Re-enter Details for updation" << endl;
+                int flag = 0;
+
+                // asking the user for medical details
+                cout << "Enter Medical Details : " << endl;
+                hypertension = Hypertension();
+                mellitus = Mellitus();
+                asthma = Asthma();
+                bronchitis = Bronchitis();
+                any_congenital_disease = Any_congenital_disease();
+                any_surgery_or_accident = Any_surgery_or_accident();
+                any_drug_intake = Any_drug_intake();
+
+                upd << enroll << "," << hypertension << "," << mellitus << "," << asthma << "," << bronchitis << "," << any_congenital_disease << "," << any_surgery_or_accident << "," << any_drug_intake << endl;
+            }
+            else
+            {
+                upd << line << endl;
+            }
+        }
+
+        if (found == 0)
+        {
+            cout << "No Record Found with entered enrollment." << endl;
+        }
+
+        upd.close();
+        ori.close();
+
+        remove("MedicalDetails.csv");
+        rename("updated.csv", "MedicalDetails.csv");
+    }
+
+    void delete_medical_details(int enroll)
+    {
+        int found = 0;
+
+        ofstream upd("updated.csv", ios::out);
+        ifstream ori("MedicalDetails.csv", ios::in);
+        if (!(upd.is_open() && ori.is_open()))
+        {
+            cout << "error in opening file" << endl;
+            return;
+        }
+
+        string line, word;
+        while (getline(ori, line))
+        {
+            stringstream s(line);
+            getline(s, word, ',');
+            if (enroll == stoi(word))
+            {
+                found = 1;
+            }
+            else
+            {
+                upd << line << endl;
+            }
+        }
+
+        if (found == 0)
+        {
+            cout << "No Record Found with entered enrollment." << endl;
+        }
+
+        upd.close();
+        ori.close();
+
+        remove("MedicalDetails.csv");
+        rename("updated.csv", "MedicalDetails.csv");
     }
 };
 
@@ -620,6 +881,115 @@ public:
         fp.close();
         //closing a file
     }
+
+    void update_bank_details(int enroll)
+    {
+
+        int found = 0;
+
+        ofstream upd("updated.csv", ios::out);
+        ifstream ori("BankDetails.csv", ios::in);
+        if (!(upd.is_open() && ori.is_open()))
+        {
+            cout << "error in opening file" << endl;
+            return;
+        }
+
+        string line, word;
+        while (getline(ori, line))
+        {
+            stringstream s(line);
+            getline(s, word, ',');
+            if (enroll == stoi(word))
+            {
+                found = 1;
+
+                cout << "Re-enter Details for updation" << endl;
+                int flag = 0;
+
+                cout << "Enter Account holder's name:";
+                fflush(stdin);
+                getline(cin, name_of_account_holder);
+                fflush(stdin);
+
+                cout << "Enter Account number:";
+                fflush(stdin);
+                cin >> account_no;
+                fflush(stdin);
+
+                cout << "Enter name of the bank:";
+                fflush(stdin);
+                getline(cin, name_of_bank);
+                fflush(stdin);
+
+                cout << "Enter branch name:";
+                fflush(stdin);
+                getline(cin, branch);
+                fflush(stdin);
+
+                cout << "Enter the IFSC code:";
+                fflush(stdin);
+                getline(cin, IFSC_code);
+                fflush(stdin);
+
+                upd << enroll << "," << name_of_account_holder << "," << account_no << "," << name_of_bank << "," << branch << "," << IFSC_code << endl;
+            }
+            else
+            {
+                upd << line << endl;
+            }
+        }
+
+        if (found == 0)
+        {
+            cout << "No Record Found with entered enrollment." << endl;
+        }
+
+        upd.close();
+        ori.close();
+
+        remove("BankDetails.csv");
+        rename("updated.csv", "BankDetails.csv");
+    }
+
+    void delete_bank_details(int enroll)
+    {
+        int found = 0;
+
+        ofstream upd("updated.csv", ios::out);
+        ifstream ori("BankDetails.csv", ios::in);
+        if (!(upd.is_open() && ori.is_open()))
+        {
+            cout << "error in opening file" << endl;
+            return;
+        }
+
+        string line, word;
+        while (getline(ori, line))
+        {
+            stringstream s(line);
+            getline(s, word, ',');
+            if (enroll == stoi(word))
+            {
+                found = 1;
+            }
+            else
+            {
+                upd << line << endl;
+            }
+        }
+
+        if (found == 0)
+        {
+            cout << "No Record Found with entered enrollment." << endl;
+        }
+
+        upd.close();
+        ori.close();
+
+        remove("BankDetails.csv");
+        rename("updated.csv", "BankDetails.csv");
+    }
 };
 
 class Student : public Basic_Details, public Medical_Details, public Bank_Details
@@ -670,7 +1040,6 @@ public:
         cout << "Student Registered Successfully." << endl;
         cout << "\n";
     }
-
 };
 
 class LoginPage : public Student
@@ -755,6 +1124,11 @@ public:
             cout << "6. Display Basic Details of a student using enrollment number" << endl;
             cout << "7. Display Medical Details of a student using enrollment number" << endl;
             cout << "8. Display Bank Details of a student using enrollment number" << endl;
+            cout << "9. Update Basic Details of a student using enrollment number" << endl;
+            cout << "10. Update Medical Details of a student using enrollment number" << endl;
+            cout << "11. Update Bank Details of a student using enrollment number" << endl;
+            cout << "12. Delete all Details of a student using enrollment number" << endl;
+
             cout << "\n";
             cout << "Enter operation you want to perform:";
             cin >> ch;
@@ -816,6 +1190,36 @@ public:
 
                 cout << "Bank Details:" << endl;
                 search_bank_details(get_enroll());
+
+                break;
+
+            case 9:
+                set_enroll();
+
+                update_basic_details(get_enroll());
+
+                break;
+
+            case 10:
+                set_enroll();
+
+                update_medical_details(get_enroll());
+
+                break;
+
+            case 11:
+                set_enroll();
+
+                update_bank_details(get_enroll());
+
+                break;
+
+            case 12:
+                set_enroll();
+
+                delete_basic_details(get_enroll());
+                delete_medical_details(get_enroll());
+                delete_bank_details(get_enroll());
 
                 break;
 
